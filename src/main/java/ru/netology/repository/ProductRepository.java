@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import ru.netology.NotFoundException;
 import ru.netology.domain.Product;
 
 import static java.lang.System.arraycopy;
@@ -31,7 +32,11 @@ public class ProductRepository {
         return null;
     }
 
-    public void removeById(int id) {
+    public Product[]  removeById(int id) {
+
+        if (findById(id) == null) {
+            throw new NotFoundException("Ты просишь удалить элемент с id" +id+",a он не существует");
+        }
         int length = items.length - 1;
         Product[] tmp = new Product[length];
         int index = 0;
@@ -42,6 +47,7 @@ public class ProductRepository {
             }
         }
         items = tmp;
+        return items;
     }
 }
 
